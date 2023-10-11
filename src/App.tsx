@@ -25,7 +25,7 @@ const App: React.FC = () => {
         }));
 
         sendPostRequest(
-          "https://real-assist-backend-chaitanya.onrender.com/report-generate",
+          "https://real-assist-backend-d02ec0b0906c.herokuapp.com/report-generate",
           extractedData
         );
       })
