@@ -1,5 +1,7 @@
 import { useState } from "react";
+import printJS from "print-js";
 import printer from "./assets/printer.svg";
+
 import "./App.css";
 
 interface DataItem {
@@ -28,10 +30,7 @@ const App: React.FC = () => {
           extractedData
         );
       })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .catch((error) => console.error(error));
   };
 
   const sendPostRequest = (url: string, requestBody: DataItem[]) => {
@@ -50,10 +49,10 @@ const App: React.FC = () => {
       })
       .then((data) => {
         const pdfURL = data.pdfURL;
-        window.open(pdfURL, "_blank");
+        printJS({ printable: pdfURL, type: "pdf", showModal: true });
       })
-      .catch((error) => {
-        console.error("Error:", error);
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -61,7 +60,14 @@ const App: React.FC = () => {
     <>
       <div className="card">
         <button onClick={handleButtonClick} disabled={isLoading}>
-          <img src={printer} alt="printer" /> Print
+          {isLoading ? (
+            <>Loading....</>
+          ) : (
+            <>
+              <img src={printer} alt="printer" />
+              Print
+            </>
+          )}
         </button>
       </div>
     </>
