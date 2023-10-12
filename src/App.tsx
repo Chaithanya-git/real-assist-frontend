@@ -1,6 +1,5 @@
 import { useState } from "react";
 import printer from "./assets/printer.svg";
-
 import "./App.css";
 
 interface DataItem {
@@ -25,7 +24,7 @@ const App: React.FC = () => {
         }));
 
         sendPostRequest(
-          "https://real-assist-backend-d02ec0b0906c.herokuapp.com/report-generate",
+          "https://real-assist-backend.onrender.com/api/report-generate",
           extractedData
         );
       })
@@ -47,12 +46,11 @@ const App: React.FC = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.blob();
+        return response.json();
       })
-      .then((blob) => {
-        const pdfUrl = URL.createObjectURL(blob);
-        window.open(pdfUrl);
-        URL.revokeObjectURL(pdfUrl);
+      .then((data) => {
+        const pdfURL = data.pdfURL;
+        window.open(pdfURL, "_blank");
       })
       .catch((error) => {
         console.error("Error:", error);
