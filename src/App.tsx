@@ -24,7 +24,7 @@ const App: React.FC = () => {
         }));
 
         sendPostRequest(
-          "https://real-assist-backend.onrender.com/api/report-generate",
+          "https://real-assist-backend-kfg7.onrender.com/api/report-generate",
           extractedData
         );
       })
